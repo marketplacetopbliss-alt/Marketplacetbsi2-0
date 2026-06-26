@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marketplace Team — Easebrew Herbal Coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF6EE;
+    --bg-soft:#F3EADA;
+    --ink:#2B1C13;
+    --ink-soft:#6B5849;
+    --line:#DCCBB3;
+    --card:#FFFFFF;
+    --brand:#5C4031;
+    --brand-ink:#2E2017;
+    --green:#43614A;
+    --green-ink:#23362A;
+    --amber:#B9763F;
+    --amber-ink:#5B3A1D;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(43,28,19,0.06), 0 8px 24px rgba(43,28,19,0.07);
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto;} *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;} }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px;}
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11.5px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--amber-ink);
+    background:#F2DFC8;
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:99px;
+  }
+
+  /* ---------- HERO ---------- */
+  header.hero{
+    position:relative;
+    padding:64px 0 40px;
+    overflow:hidden;
+  }
+  .stain{
+    position:absolute;
+    top:-120px; right:-140px;
+    width:420px; height:420px;
+    border-radius:50%;
+    background:radial-gradient(circle at 40% 40%, rgba(92,64,49,0.10), rgba(92,64,49,0) 70%);
+    pointer-events:none;
+  }
+  h1.title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:clamp(34px,5vw,52px);
+    line-height:1.05;
+    margin:18px 0 10px;
+    color:var(--brand-ink);
+  }
+  .sub{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:560px;
+    margin:0 0 22px;
+  }
+  .metrics{
+    display:flex; flex-wrap:wrap; gap:10px;
+  }
+  .pill{
+    font-size:13.5px;
+    font-weight:500;
+    padding:8px 14px;
+    border-radius:99px;
+    border:1px solid var(--line);
+    background:var(--card);
+    color:var(--ink-soft);
+  }
+  .pill b{color:var(--brand-ink);}
+
+  /* ---------- QUICK NAV ---------- */
+  nav.quick{
+    display:flex; gap:8px; flex-wrap:wrap;
+    margin-top:28px;
+  }
+  .navbtn{
+    font-family:'Inter',sans-serif;
+    font-size:13.5px; font-weight:600;
+    color:var(--brand-ink);
+    background:var(--bg-soft);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:9px 14px;
+    cursor:pointer;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .navbtn:hover{background:#EADFC8; transform:translateY(-1px);}
+  .navbtn:focus-visible{outline:2px solid var(--brand); outline-offset:2px;}
+
+  /* ---------- ORG CHART ---------- */
+  section.chart-section{padding:36px 0 8px;}
+  h2.section-title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:26px;
+    color:var(--brand-ink);
+    margin:0 0 4px;
+  }
+  p.section-note{color:var(--ink-soft); margin:0 0 28px; font-size:15px;}
+
+  .org-chart{
+    position:relative;
+    padding:10px 0 28px;
+  }
+  svg.connectors{
+    position:absolute; top:0; left:0;
+    width:100%; height:100%;
+    pointer-events:none;
+    z-index:0;
+  }
+  .tier{
+    position:relative;
+    z-index:1;
+    display:flex;
+    justify-content:center;
+    gap:28px;
+    flex-wrap:wrap;
+    margin:0 0 56px;
+  }
+  .tier:last-child{margin-bottom:0;}
+  .tier-3{margin-top:-12px;}
+
+  button.node{
+    font-family:'Inter',sans-serif;
+    text-align:left;
+    cursor:pointer;
+    border:1.5px solid var(--line);
+    background:var(--card);
+    border-radius:var(--radius);
+    padding:16px 18px;
+    width:230px;
+    box-shadow:var(--shadow);
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  button.node:hover{transform:translateY(-3px); box-shadow:0 4px 8px rgba(43,28,19,0.08), 0 14px 28px rgba(43,28,19,0.1);}
+  button.node:focus-visible{outline:2px solid var(--brand); outline-offset:2px;}
+  button.node.active{border-color:currentColor; box-shadow:0 0 0 2px currentColor, var(--shadow);}
+
+  .node-tag{
+    font-family:'JetBrains Mono',monospace;
+    font-size:10.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    opacity:.75;
+    display:block;
+    margin-bottom:6px;
+  }
+  .node-role{font-weight:600; font-size:15.5px; line-height:1.3; color:var(--ink);}
+  .node-name{font-size:13.5px; color:var(--ink-soft); margin-top:3px;}
+
+  .node-head{color:var(--brand); width:250px; margin:0 auto;}
+  .node-mid{color:var(--green);}
+  .node-leaf{color:var(--amber); width:200px;}
+
+  .tap-hint{
+    text-align:center;
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+
+  /* ---------- DETAIL PANEL ---------- */
+  #detailPanel{
+    margin-top:8px;
+    border-radius:18px;
+    background:var(--card);
+    border:1px solid var(--line);
+    box-shadow:var(--shadow);
+    padding:30px 32px;
+    scroll-margin-top:24px;
+  }
+  #detailPanel.empty{
+    text-align:center;
+    color:var(--ink-soft);
+    padding:46px 32px;
+    font-size:15px;
+  }
+  .detail-head{
+    display:flex; align-items:flex-start; justify-content:space-between; gap:16px;
+    border-bottom:1px solid var(--line);
+    padding-bottom:18px; margin-bottom:18px;
+  }
+  .detail-role{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:23px;
+    color:var(--brand-ink);
+    margin:6px 0 2px;
+  }
+  .detail-name{color:var(--ink-soft); font-size:14.5px;}
+  .detail-summary{font-size:15px; color:var(--ink); margin:16px 0 22px; max-width:680px;}
+  .cols{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  @media (max-width:700px){.cols{grid-template-columns:1fr;}}
+  .col-title{
+    font-family:'JetBrains Mono',monospace;
+    font-size:11px; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink-soft); margin-bottom:10px;
+  }
+  ul.kra-list, ol.flow-list{margin:0; padding-left:20px;}
+  ul.kra-list li, ol.flow-list li{margin-bottom:9px; font-size:14.5px;}
+  ol.flow-list{counter-reset:flow;}
+
+  /* ---------- COORDINATION ---------- */
+  section.coord{padding:56px 0;}
+  .coord-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:14px;}
+  @media (max-width:800px){.coord-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:480px){.coord-grid{grid-template-columns:1fr;}}
+  .coord-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px 16px 18px;
+    box-shadow:var(--shadow);
+  }
+  .coord-card h4{
+    font-family:'Inter',sans-serif;
+    font-size:14px; font-weight:700; margin:0 0 10px; color:var(--brand-ink);
+  }
+  .coord-row{font-size:13px; margin-bottom:6px;}
+  .coord-row span{font-weight:600;}
+  .coord-row.a span{color:var(--green-ink);}
+  .coord-row.b span{color:var(--amber-ink);}
+
+  /* ---------- ESCALATION ---------- */
+  section.escalation{padding:0 0 64px;}
+  .esc-chain{display:flex; flex-direction:column; gap:0; max-width:560px;}
+  .esc-step{
+    display:flex; align-items:center; gap:14px;
+    padding:14px 0;
+  }
+  .esc-step:not(:last-child){border-bottom:1px dashed var(--line);}
+  .esc-num{
+    font-family:'JetBrains Mono',monospace;
+    font-size:12px; font-weight:500;
+    width:30px; height:30px; flex:none;
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--bg-soft); color:var(--brand-ink);
+  }
+  .esc-text{font-size:14.5px;}
+  .esc-text b{color:var(--brand-ink);}
+
+  footer{
+    padding:30px 0 50px;
+    color:var(--ink-soft);
+    font-size:13px;
+    border-top:1px solid var(--line);
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="stain" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="eyebrow">Topbliss Solutions Inc. · Easebrew Herbal Coffee</span>
+    <h1 class="title">Marketplace team, mapped out</h1>
+    <p class="sub">Who reports to whom, what each person owns, and how Shopee, Lazada and TikTok Shop sales get run day to day. Tap any role below to open it up.</p>
+    <div class="metrics">
+      <span class="pill">Monthly quota <b>₱3.5M</b></span>
+      <span class="pill">Target ROAS <b>10–15x</b></span>
+      <span class="pill">Platforms <b>Shopee · Lazada · TikTok Shop</b></span>
+    </div>
+    <nav class="quick" aria-label="Jump to a role">
+      <button class="navbtn" data-jump="head">Marketplace Head</button>
+      <button class="navbtn" data-jump="associate">Marketplace Associate</button>
+      <button class="navbtn" data-jump="oic">TikTok OIC</button>
+      <button class="navbtn" data-jump="live1">Live Sellers</button>
+    </nav>
+  </div>
+</header>
+
+<section class="chart-section">
+  <div class="wrap">
+    <h2 class="section-title">Organizational structure</h2>
+    <p class="section-note">Tap a role to see their KRAs and daily process flow.</p>
+
+    <div class="org-chart" id="orgChart">
+      <svg class="connectors" id="connectors"></svg>
+
+      <div class="tier tier-1">
+        <button class="node node-head" data-id="head">
+          <span class="node-tag">Level 1 · Head</span>
+          <span class="node-role">Marketplace Head</span>
+          <span class="node-name">Hazel Bernardino</span>
+        </button>
+      </div>
+
+      <div class="tier tier-2">
+        <button class="node node-mid" data-id="associate">
+          <span class="node-tag">Level 2 · Shopee / Lazada / Ads</span>
+          <span class="node-role">Marketplace Associate</span>
+          <span class="node-name">Mary Margareth Bolado</span>
+        </button>
+        <button class="node node-mid" data-id="oic">
+          <span class="node-tag">Level 2 · TikTok Shop</span>
+          <span class="node-role">TikTok OIC</span>
+          <span class="node-name">Aries Hinlo</span>
+        </button>
+      </div>
+
+      <div class="tier tier-3">
+        <button class="node node-leaf" data-id="live1">
+          <span class="node-tag">Level 3 · Frontline</span>
+          <span class="node-role">Live Seller</span>
+          <span class="node-name">Kathlene Cate Araneta</span>
+        </button>
+        <button class="node node-leaf" data-id="live2">
+          <span class="node-tag">Level 3 · Frontline</span>
+          <span class="node-role">Live Seller</span>
+          <span class="node-name">Malyn Orsaga</span>
+        </button>
+      </div>
+    </div>
+    <p class="tap-hint">Dashed line = daily coordination, not a reporting line.</p>
+
+    <div id="detailPanel" class="empty" tabindex="-1">
+      Click a role in the chart above — their key result areas and daily flow will open here.
+    </div>
+  </div>
+</section>
+
+<section class="coord">
+  <div class="wrap">
+    <h2 class="section-title">Where Associate &amp; OIC sync</h2>
+    <p class="section-note">They're peers, not one over the other — these are the daily handoffs that keep ads, content and live selling pointed the same direction.</p>
+    <div class="coord-grid">
+      <div class="coord-card">
+        <h4>Winning products</h4>
+        <div class="coord-row a"><span>Associate:</span> ads/sales data on what's converting</div>
+        <div class="coord-row b"><span>OIC:</span> organic content/affiliate data on what's resonating</div>
+      </div>
+      <div class="coord-card">
+        <h4>Campaign schedules</h4>
+        <div class="coord-row a"><span>Associate:</span> platform campaign calendar, vouchers</div>
+        <div class="coord-row b"><span>OIC:</span> livestream and content calendar aligned to campaigns</div>
+      </div>
+      <div class="coord-card">
+        <h4>Content & affiliates</h4>
+        <div class="coord-row a"><span>Associate:</span> which products to prioritize, from ads/sales data</div>
+        <div class="coord-row b"><span>OIC:</span> affiliate creator results, content performance</div>
+      </div>
+      <div class="coord-card">
+        <h4>Live performance</h4>
+        <div class="coord-row a"><span>Associate:</span> read of paid ads' impact on conversions</div>
+        <div class="coord-row b"><span>OIC:</span> live GMV, organic reach, affiliate-driven sales</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="escalation">
+  <div class="wrap">
+    <h2 class="section-title">Escalation path</h2>
+    <p class="section-note">What happens when something can't be resolved at the current level.</p>
+    <div class="esc-chain">
+      <div class="esc-step">
+        <span class="esc-num">1</span>
+        <span class="esc-text">Live Sellers raise live-session issues to <b>TikTok OIC</b></span>
+      </div>
+      <div class="esc-step">
+        <span class="esc-num">2</span>
+        <span class="esc-text">OIC &amp; Associate raise platform, ads, or store-health issues they can't resolve together to <b>Marketplace Head</b></span>
+      </div>
+      <div class="esc-step">
+        <span class="esc-num">3</span>
+        <span class="esc-text">Marketplace Head raises business-level issues to <b>Company Management</b></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">Marketplace org reference · Topbliss Solutions Inc. — Easebrew Herbal Coffee. Built from the Marketplace Daily Operations SOP.</div>
+</footer>
+
+<script>
+const ROLES = {
+  head: {
+    tag: "Level 1 · Head",
+    role: "Marketplace Head / Marketplace Supervisor",
+    name: "Hazel Bernardino",
+    color: "var(--brand)", colorInk: "var(--brand-ink)",
+    summary: "Owns overall marketplace performance across Shopee, Lazada, and TikTok Shop. Sets direction and protects the monthly target and ROAS standard.",
+    kras: [
+      "Set and cascade the monthly sales quota (₱3.5M) and ROAS targets (10–15x) across all platforms",
+      "Supervise and align the Marketplace Associate and TikTok OIC",
+      "Review weekly and monthly sales, ROAS, and campaign performance reports",
+      "Approve major campaigns, ad budget increases, and pricing or promo changes",
+      "Handle escalated complaints, platform violations, and account-health risks",
+      "Report overall marketplace performance to company management",
+      "Make sure the Associate and OIC are coordinating, not operating in silos"
+    ],
+    flow: [
+      "Check in with the Associate and OIC on sales pacing vs. the ₱3.5M monthly target",
+      "Spot-check ROAS across platforms against the 10–15x standard",
+      "Review and approve any requested ad budget increases, new campaigns, or promo changes",
+      "Step in on escalated complaints or platform violations",
+      "Weekly/monthly: consolidate performance across all platforms and report to management"
+    ]
+  },
+  associate: {
+    tag: "Level 2 · Shopee / Lazada / Ads",
+    role: "Marketplace Associate / Processor",
+    name: "Mary Margareth Bolado",
+    color: "var(--green)", colorInk: "var(--green-ink)",
+    summary: "Owns Shopee and Lazada end-to-end, plus paid ads management across all three platforms — including TikTok Ads. TikTok Shop's own store operations, admin, affiliates, and content uploading sit with the OIC.",
+    kras: [
+      "Overall Shopee Operations and overall Lazada Operations",
+      "Sales encoding and database management (sales, product, campaign, affiliate, inventory)",
+      "Customer concern handling for Shopee and Lazada (orders, refunds, vouchers, complaints)",
+      "Ads management across Shopee Ads, Lazada Sponsored Solutions, and TikTok Ads",
+      "Marketplace admin tasks: creating vouchers and discounts, joining platform campaigns",
+      "Daily coordination with the TikTok OIC on ads, winning products, and campaign schedules"
+    ],
+    flow: [
+      "Start of day (8–9 AM): check Shopee/Lazada/TikTok notifications, orders, messages, returns, violations",
+      "Review yesterday's sales, today's target, best sellers, conversion, and ads performance; update dashboard",
+      "Order management every 1–2 hours: verify payments, coordinate logistics, monitor fulfillment and cancellations",
+      "Customer service in real time: respond within 5–10 minutes; escalate major concerns immediately",
+      "Daily sales encoding and database upkeep across all platforms at 100% accuracy",
+      "Ads management: monitor ROAS/ACOS, scale winners, pause underperformers, test creatives",
+      "Shopee & Lazada ops: listings, pricing, promos, vouchers, flash sales, store health",
+      "TikTok ads management: launch and scale campaigns, analyze winning creatives",
+      "Coordinate with TikTok OIC on live performance, promotions, and campaign schedules"
+    ]
+  },
+  oic: {
+    tag: "Level 2 · TikTok Shop",
+    role: "TikTok OIC",
+    name: "Aries Hinlo",
+    color: "var(--green)", colorInk: "var(--green-ink)",
+    summary: "Owns TikTok Shop's day-to-day store operations and admin tasks, and drives organic sales through affiliate management and content uploading. TikTok paid ads stay with the Marketplace Associate — the OIC's lever is organic, not paid.",
+    kras: [
+      "Overall TikTok Shop store operations: listings, pricing, promotions, stock visibility",
+      "TikTok Shop admin tasks: vouchers, discounts, joining campaigns, answering reviews and inquiries",
+      "Affiliate management: recruit, brief, and coordinate TikTok affiliate creators to drive organic sales",
+      "Content uploading: post and manage organic content on the TikTok account (videos, product showcases, livestream highlights)",
+      "Schedule and supervise Live Sellers; ensure livestream coverage and consistency",
+      "Monitor organic content, affiliate, and livestream performance (views, engagement, organic GMV)",
+      "Coordinate daily with the Marketplace Associate on content/affiliate insights and winning products",
+      "Escalate store-health issues or major TikTok Shop concerns to the Marketplace Head"
+    ],
+    flow: [
+      "Start of day: check TikTok Shop notifications — orders, messages, returns, violations, announcements",
+      "Review store health, listing status, stock availability, and yesterday's content/affiliate/livestream results",
+      "Confirm the day's livestream schedule and content plan with the Live Sellers",
+      "Affiliate management: recruit/brief affiliate creators, send product samples, track affiliate-driven sales",
+      "Upload and manage organic content on the TikTok account to boost organic reach",
+      "Admin tasks: prepare vouchers/discounts, join campaigns, respond to reviews and inquiries",
+      "Monitor livestream sessions throughout the day — viewers, conversion, GMV",
+      "Coordinate with the Associate on content/affiliate insights and winning products",
+      "End of day: consolidate organic content, affiliate, and livestream results; flag issues to the Marketplace Head"
+    ]
+  },
+  liveTemplate: {
+    tag: "Level 3 · Frontline",
+    role: "Live Seller",
+    color: "var(--amber)", colorInk: "var(--amber-ink)",
+    summary: "Owns the on-camera selling motion on TikTok Shop — turning the OIC's schedule and the Associate's ads/campaigns into live conversions.",
+    kras: [
+      "Conduct scheduled livestream selling sessions for Easebrew Herbal Coffee",
+      "Demonstrate products, explain benefits and promos, drive add-to-cart and checkout during live",
+      "Engage viewers in real time: answer live chat questions, highlight vouchers and flash deals",
+      "Follow the livestream schedule and content direction set by the TikTok OIC",
+      "Report session results and feedback to the TikTok OIC after each livestream"
+    ],
+    flow: [
+      "Receive the day's schedule, featured products, and active promos from the TikTok OIC",
+      "Prepare the live setup: product samples, talking points, promo callouts",
+      "Run the livestream: demonstrate products, mention vouchers, answer chat, drive checkouts",
+      "Track session notes: viewer questions, objections, best-performing moments",
+      "Report session results and feedback to the TikTok OIC"
+    ]
+  }
+};
+ROLES.live1 = {...ROLES.liveTemplate, name:"Kathlene Cate Araneta"};
+ROLES.live2 = {...ROLES.liveTemplate, name:"Malyn Orsaga"};
+
+const CONNECTIONS = [
+  {from:"head", to:"associate", style:"solid"},
+  {from:"head", to:"oic", style:"solid"},
+  {from:"associate", to:"oic", style:"dashed"},
+  {from:"oic", to:"live1", style:"solid"},
+  {from:"oic", to:"live2", style:"solid"},
+];
+
+const chart = document.getElementById('orgChart');
+const svg = document.getElementById('connectors');
+const panel = document.getElementById('detailPanel');
+const nodes = Array.from(document.querySelectorAll('button.node'));
+
+function nodeCenter(id, edge){
+  const el = chart.querySelector('[data-id="'+id+'"]');
+  const r = el.getBoundingClientRect();
+  const c = chart.getBoundingClientRect();
+  const x = r.left - c.left + r.width/2;
+  if(edge === 'bottom') return {x, y: r.bottom - c.top};
+  if(edge === 'top') return {x, y: r.top - c.top};
+  if(edge === 'left') return {x: r.left - c.left, y: r.top - c.top + r.height/2};
+  if(edge === 'right') return {x: r.right - c.left, y: r.top - c.top + r.height/2};
+  return {x, y: r.top - c.top + r.height/2};
+}
+
+function drawConnectors(){
+  const c = chart.getBoundingClientRect();
+  svg.setAttribute('width', c.width);
+  svg.setAttribute('height', c.height);
+  svg.setAttribute('viewBox', '0 0 '+c.width+' '+c.height);
+  svg.innerHTML = '';
+  const stroke = getComputedStyle(document.body).color;
+  const lineColor = '#C9B795';
+
+  CONNECTIONS.forEach(conn=>{
+    const fromEl = chart.querySelector('[data-id="'+conn.from+'"]');
+    const toEl = chart.querySelector('[data-id="'+conn.to+'"]');
+    if(!fromEl || !toEl) return;
+    const fr = fromEl.getBoundingClientRect();
+    const tr = toEl.getBoundingClientRect();
+    const stacked = Math.abs((fr.top) - (tr.top)) > 4 && (fr.top < tr.top);
+
+    let p1, p2, path;
+    if(conn.style === 'dashed'){
+      p1 = nodeCenter(conn.from, 'right');
+      p2 = nodeCenter(conn.to, 'left');
+      if(p2.x < p1.x){ p1 = nodeCenter(conn.from,'left'); p2 = nodeCenter(conn.to,'right'); }
+      path = stacked && Math.abs(p1.x-p2.x) < 4
+        ? 'M'+p1.x+','+p1.y+' L'+p2.x+','+p2.y
+        : 'M'+p1.x+','+p1.y+' L'+p2.x+','+p2.y;
+    } else {
+      p1 = nodeCenter(conn.from, 'bottom');
+      p2 = nodeCenter(conn.to, 'top');
+      const midY = p1.y + (p2.y - p1.y) / 2;
+      path = stacked
+        ? 'M'+p1.x+','+p1.y+' C'+p1.x+','+midY+' '+p2.x+','+midY+' '+p2.x+','+p2.y
+        : 'M'+p1.x+','+p1.y+' L'+p2.x+','+p2.y;
+    }
+    const pathEl = document.createElementNS('http://www.w3.org/2000/svg','path');
+    pathEl.setAttribute('d', path);
+    pathEl.setAttribute('fill', 'none');
+    pathEl.setAttribute('stroke', lineColor);
+    pathEl.setAttribute('stroke-width', '1.5');
+    if(conn.style === 'dashed') pathEl.setAttribute('stroke-dasharray', '4 5');
+    svg.appendChild(pathEl);
+  });
+}
+
+function renderDetail(id, scroll){
+  const r = ROLES[id];
+  panel.classList.remove('empty');
+  panel.innerHTML =
+    '<div class="detail-head">'+
+      '<div>'+
+        '<span class="eyebrow" style="background:transparent;border:1px solid '+r.color+';color:'+r.colorInk+'">'+r.tag+'</span>'+
+        '<div class="detail-role">'+r.role+'</div>'+
+        '<div class="detail-name">'+r.name+'</div>'+
+      '</div>'+
+    '</div>'+
+    '<p class="detail-summary">'+r.summary+'</p>'+
+    '<div class="cols">'+
+      '<div><div class="col-title">Key result areas</div><ul class="kra-list">'+r.kras.map(k=>'<li>'+k+'</li>').join('')+'</ul></div>'+
+      '<div><div class="col-title">Daily flow</div><ol class="flow-list">'+r.flow.map(f=>'<li>'+f+'</li>').join('')+'</ol></div>'+
+    '</div>';
+
+  nodes.forEach(n=>n.classList.toggle('active', n.dataset.id === id));
+  if(scroll){ panel.scrollIntoView({behavior:'smooth', block:'center'}); panel.focus({preventScroll:true}); }
+}
+
+nodes.forEach(n=>{
+  n.addEventListener('click', ()=> renderDetail(n.dataset.id, true));
+});
+
+document.querySelectorAll('.navbtn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const id = btn.dataset.jump;
+    document.getElementById('orgChart').scrollIntoView({behavior:'smooth', block:'center'});
+    renderDetail(id, false);
+    setTimeout(()=> panel.scrollIntoView({behavior:'smooth', block:'center'}), 350);
+  });
+});
+
+window.addEventListener('resize', drawConnectors);
+window.addEventListener('load', drawConnectors);
+document.fonts.ready.then(drawConnectors);
+setTimeout(drawConnectors, 60);
+</script>
+
+</body>
+</html>
